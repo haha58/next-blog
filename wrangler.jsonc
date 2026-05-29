@@ -1,0 +1,38 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"main": ".open-next/worker.js",
+	"name": "my-app",
+	"compatibility_date": "2026-05-27",
+	"compatibility_flags": [
+		"nodejs_compat",
+		"global_fetch_strictly_public"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"services": [
+		{
+			// Self-reference service binding, the service name must match the worker name
+			// see https://opennext.js.org/cloudflare/caching
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "my-app"
+		}
+	],
+	"images": {
+		// Enable image optimization
+		// see https://opennext.js.org/cloudflare/howtos/image
+		"binding": "IMAGES"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "MY_NEXT_KV",
+			"id": "13783b9801dd4fd3998e1c38d831fdae"
+		}
+	],
+	"vars": {
+		"GITHUB_CLIENT_ID": "Ov23limXrMpCfQu3UbQv",
+		"GITHUB_CLIENT_SECRET": "1abd74e2ba0819292a7976d906c87e085a4561b8",
+		"NEXT_PUBLIC_BASE_URL": "http://localhost:3000"
+	}
+}
