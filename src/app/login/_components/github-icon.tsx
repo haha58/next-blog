@@ -1,4 +1,3 @@
-// components/auth/icons.tsx
 export function GithubIcon({ className }: { className?: string }) {
   return (
     <svg 

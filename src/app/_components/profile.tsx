@@ -4,9 +4,7 @@ export default async function Profile() {
   const user = await getCurrentUser();
   if (!user) {
     return (
-      <div>
-        <a href='/login' className='text-[#1677ff] hover:text-[#4096ff] transition'>请登录</a>
-      </div>
+      <a href='/login' className='text-[#1677ff] hover:text-[#4096ff] transition'>请登录</a>
     );
   }
   return (

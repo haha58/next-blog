@@ -5,25 +5,30 @@ import { addComment } from '@/app/articles/_service/create-comment';
 interface CommentSectionProps {
   comments: CommentX[];
   pre_id: string;
-  user: Profile;
+  user?: Profile | null;
 }
 
 export default function CommentSection({ comments = [], pre_id, user }: CommentSectionProps) {
   const [list, setComments] = useState(comments);
 
   const handleSubmit = (formData: FormData) => {
+    if (!user) {
+      window.location.href = '/login';
+      return;
+    }
+
     const content = formData.get('content') as string;
     if (!content.trim()) return;
     const now = Date.now();
-    const newComment: CommentX = { 
+    const newComment: CommentX = {
       // 模拟的假 id，真实的 id 在服务端生成
-      id: String(now), 
+      id: String(now),
       pre_id,
       content,
       createdAt: now,
       updatedAt: now,
       isLiked: false,
-      ...user
+      ...user,
     };
     setComments([...list, newComment]);
     addComment({ pre_id, content });
@@ -32,11 +37,30 @@ export default function CommentSection({ comments = [], pre_id, user }: CommentS
   return (
     <div className="mt-10 pt-10 border-t border-[#d6e4ff]">
       <h3 className="text-xl font-bold mb-6 text-slate-900">评论 ({list.length})</h3>
-      
-      <form action={handleSubmit} className="flex gap-4 mb-8">
-        <input type="text" name='content' placeholder="写下你的看法..." className="flex-1! indent-3! border border-[#d6e4ff] bg-white focus:outline-none focus:border-[#1677ff] focus:ring-4 focus:ring-[#1677ff]/10 transition" required/>
-        <button type="submit" className="bg-[#1677ff] text-white px-6 py-2 font-semibold shadow-[0_8px_20px_rgba(22,119,255,0.22)] hover:bg-[#4096ff] transition">发送</button>
-      </form>
+
+      {user ? (
+        <form action={handleSubmit} className="flex gap-4 mb-8">
+          <input
+            type="text"
+            name="content"
+            placeholder="写下你的看法..."
+            className="flex-1! indent-3! border border-[#d6e4ff] bg-white focus:outline-none focus:border-[#1677ff] focus:ring-4 focus:ring-[#1677ff]/10 transition"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-[#1677ff] text-white px-6 py-2 font-semibold shadow-[0_8px_20px_rgba(22,119,255,0.22)] hover:bg-[#4096ff] transition"
+          >
+            发送
+          </button>
+        </form>
+      ) : (
+        <div className="mb-8 border border-[#d6e4ff] bg-[#f7fbff] px-4 py-3 text-sm text-slate-500">
+          <a href="/login" className="font-medium text-[#1677ff] hover:text-[#4096ff]">
+            登录后参与评论
+          </a>
+        </div>
+      )}
 
       <div className="space-y-6">
         {list.map((comment) => (

@@ -24,7 +24,6 @@ export async function GET(req: NextRequest) {
     // 3. 创建 Session (存入 KV)
     const sessionId = await createSession(user.id);
 
-    // 登录成功跳回首页
     const response = NextResponse.redirect(new URL('/', req.url)); 
     
     // 4. 设置 HttpOnly Cookie

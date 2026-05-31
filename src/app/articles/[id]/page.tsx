@@ -26,11 +26,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
   const deleteAction = deleteArticleAction.bind(null, id);
   const commentSection = await CommentServer({
     pre_id: id,
-    user: {
-      user_id: displayArticle.user_id,
-      user_name: displayArticle.user_name,
-      user_avatar: displayArticle.user_avatar,
-    },
+    user: currentUser
+      ? {
+          user_id: currentUser.id,
+          user_name: currentUser.name || currentUser.login,
+          user_avatar: currentUser.avatar,
+        }
+      : null,
   });
 
   return (

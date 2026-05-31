@@ -31,6 +31,9 @@ export default function LikeButton({
       if (!result.success) {
         setLiked(previousLiked);
         setLikes(previousLikes);
+        if (result.message === 'Unauthorized') {
+          window.location.href = '/login';
+        }
         return;
       }
 
