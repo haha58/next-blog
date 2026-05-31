@@ -11,7 +11,12 @@ export async function onSubmit(column_id: string, formdata: FormData, html: stri
     title,
     content: html,
   }
-  await addArticle(meta);
-  redirect(`/columns/${column_id}`);
+  const result = await addArticle(meta);
+
+  if (!result.success) {
+    throw new Error(result.message || '创建文章失败');
+  }
+
   revalidatePath(`/columns/${column_id}`);
+  redirect(`/columns/${column_id}`);
 }

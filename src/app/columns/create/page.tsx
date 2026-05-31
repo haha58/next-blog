@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import { addColumn } from "../_service/create";
 import SubmitButton from "./_components/submit-button";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 // 加载字体
 const inter = Inter({ subsets: ["latin"] });
@@ -17,6 +18,9 @@ export default function CreateColumnForm() {
     if (!res || !res.success) {
       throw new Error(res?.message || '创建专栏失败');
     }
+    revalidatePath("/");
+    revalidatePath("/columns");
+    revalidatePath("/mycolumns");
     redirect("/");
   }
 
