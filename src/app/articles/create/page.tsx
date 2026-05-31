@@ -8,8 +8,8 @@ export default async function CreateColumnForm({ searchParams }: { searchParams:
     // 外层容器：负责背景和居中
     <div className="max-w-6xl w-full mx-auto py-4">
       {/* 卡片容器 */}
-      <div className="p-4 bg-white">
-        <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 p-8 md:p-10">
+      <div className="p-4 bg-white border border-[#d6e4ff] shadow-[0_12px_30px_rgba(22,119,255,0.08)]">
+        <div className="relative bg-white/80 backdrop-blur-lg border border-[#d6e4ff] p-8 md:p-10">
           {/* Form */}
           <CreateArticleForm column_id={columnId} />
         </div>

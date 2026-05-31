@@ -22,16 +22,11 @@ export default function CreateColumnForm() {
 
   return (
     // 外层容器：负责背景和居中
-    <div className={`relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gray-100 ${inter.className}`}>
-      
-      {/* 背景装饰 Blob 动画 */}
-      <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-      <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    <div className={`relative min-h-screen w-full flex items-center justify-center overflow-hidden ${inter.className}`}>
 
       {/* 卡片容器 */}
       <div className="relative w-full max-w-lg p-4">
-        <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 p-8 md:p-10">
+        <div className="relative bg-white/85 backdrop-blur-lg border border-[#d6e4ff] p-8 md:p-10 shadow-[0_18px_45px_rgba(22,119,255,0.12)]">
           
           {/* Header */}
           <div className="mb-10 text-center">
@@ -43,7 +38,7 @@ export default function CreateColumnForm() {
             
             {/* 专栏名称 */}
             <div className="space-y-2 group">
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 ml-1 transition-colors group-focus-within:text-gray-600">
+              <label htmlFor="name" className="block text-sm font-semibold text-slate-700 ml-1 transition-colors group-focus-within:text-[#1677ff]">
                 专栏名称
               </label>
               <div className="relative">
@@ -52,7 +47,7 @@ export default function CreateColumnForm() {
                   id="title"
                   name="title"
                   required
-                  className="block w-full px-4 py-3.5 text-slate-700 bg-white/50 border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-gray-500 outline-none transition-all duration-300 placeholder-slate-400 disabled:opacity-50"
+                  className="block w-full px-4 py-3.5 text-slate-700 bg-white/70 border border-[#d6e4ff] focus:ring-4 focus:ring-[#1677ff]/10 focus:border-[#1677ff] outline-none transition-all duration-300 placeholder-slate-400 disabled:opacity-50"
                   placeholder="例如：产品设计思维"
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
@@ -63,7 +58,7 @@ export default function CreateColumnForm() {
 
             {/* 专栏名称 */}
             <div className="space-y-2 group">
-              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 ml-1 transition-colors group-focus-within:text-gray-600">
+              <label htmlFor="name" className="block text-sm font-semibold text-slate-700 ml-1 transition-colors group-focus-within:text-[#1677ff]">
                 标签
               </label>
               <div className="relative">
@@ -72,7 +67,7 @@ export default function CreateColumnForm() {
                   id="tag"
                   name="tag"
                   required
-                  className="block w-full px-4 py-3.5 text-slate-700 bg-white/50 border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-gray-500 outline-none transition-all duration-300 placeholder-slate-400 disabled:opacity-50"
+                  className="block w-full px-4 py-3.5 text-slate-700 bg-white/70 border border-[#d6e4ff] focus:ring-4 focus:ring-[#1677ff]/10 focus:border-[#1677ff] outline-none transition-all duration-300 placeholder-slate-400 disabled:opacity-50"
                   placeholder="例如：技术趋势"
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
@@ -83,7 +78,7 @@ export default function CreateColumnForm() {
 
             {/* 专栏描述 */}
             <div className="space-y-2 group">
-              <label htmlFor="description" className="block text-sm font-semibold text-slate-700 ml-1 transition-colors group-focus-within:text-gray-600">
+              <label htmlFor="description" className="block text-sm font-semibold text-slate-700 ml-1 transition-colors group-focus-within:text-[#1677ff]">
                 专栏描述
               </label>
               <textarea
@@ -91,7 +86,7 @@ export default function CreateColumnForm() {
                 name="desc"
                 rows={4}
                 required
-                className="block w-full px-4 py-3.5 text-slate-700 bg-white/50 border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-gray-500 outline-none transition-all duration-300 resize-none placeholder-slate-400 disabled:opacity-50"
+                className="block w-full px-4 py-3.5 text-slate-700 bg-white/70 border border-[#d6e4ff] focus:ring-4 focus:ring-[#1677ff]/10 focus:border-[#1677ff] outline-none transition-all duration-300 resize-none placeholder-slate-400 disabled:opacity-50"
                 placeholder="请简要介绍该专栏的主题内容..."
               ></textarea>
             </div>

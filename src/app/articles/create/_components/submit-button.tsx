@@ -10,7 +10,7 @@ export default function SubmitButton() {
       type="submit"
       disabled={pending}
       className={`text-sm relative py-2 px-4 font-semibold transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 overflow-hidden
-        ${pending ? 'cursor-not-allowed opacity-80' : 'bg-gray-900 text-white shadow-gray-500/30 hover:-translate-y-0.5 hover:shadow-gray-500/40 focus:ring-gray-500'}
+        ${pending ? 'cursor-not-allowed opacity-80' : 'bg-[#1677ff] text-white shadow-[0_8px_20px_rgba(22,119,255,0.25)] hover:-translate-y-0.5 hover:bg-[#4096ff] hover:shadow-[0_10px_24px_rgba(22,119,255,0.30)] focus:ring-[#1677ff]'}
       `}
     >
       <span className="relative z-10 flex items-center justify-center gap-2">

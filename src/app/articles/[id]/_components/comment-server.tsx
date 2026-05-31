@@ -7,7 +7,7 @@ export default async function CommentServer({ pre_id, user }: { pre_id: string, 
   const comments = await getCommentsListByArticle(pre_id, 10);
   console.log('comments server', comments);
   return (
-    <Suspense fallback={<div className='text-center text-gray-500 my-4'>Loading...</div>}>
+    <Suspense fallback={<div className='text-center text-[#5b8def] my-4'>Loading...</div>}>
       <CommentSection comments={comments} pre_id={pre_id} user={user} />
     </Suspense>
   );

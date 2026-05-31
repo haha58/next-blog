@@ -13,6 +13,11 @@ export const columnStatsKey = {
   getPrefix: () => 'col_stats:',
 }
 
+export const columnLikeKey = {
+  getKey: (user_id: string, column_id: string) => `column_like:${user_id}:${column_id}`,
+  getPrefix: (user_id: string) => `column_like:${user_id}:`,
+}
+
 export const articleKey = {
   getKey: (id: string) => `article:${id}`,
   getPrefix: 'article:'

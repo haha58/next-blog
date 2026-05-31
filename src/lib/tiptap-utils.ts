@@ -374,8 +374,8 @@ export const handleImageUpload = async (
     )
   }
 
-  // For demo/testing: Simulate upload progress. In production, replace the following code
-  // with your own upload implementation.
+  // Store a local preview directly in the document HTML. Replace this with R2/S3
+  // upload later if articles should reference external image URLs.
   for (let progress = 0; progress <= 100; progress += 10) {
     if (abortSignal?.aborted) {
       throw new Error("Upload cancelled")
@@ -384,7 +384,27 @@ export const handleImageUpload = async (
     onProgress?.({ progress })
   }
 
-  return "/images/tiptap-ui-placeholder-image.jpg"
+  return fileToDataUrl(file, abortSignal)
+}
+
+function fileToDataUrl(file: File, abortSignal?: AbortSignal): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+
+    reader.onload = () => resolve(String(reader.result))
+    reader.onerror = () => reject(reader.error || new Error("Failed to read file"))
+    reader.onabort = () => reject(new Error("Upload cancelled"))
+
+    abortSignal?.addEventListener(
+      "abort",
+      () => {
+        reader.abort()
+      },
+      { once: true }
+    )
+
+    reader.readAsDataURL(file)
+  })
 }
 
 type ProtocolOptions = {

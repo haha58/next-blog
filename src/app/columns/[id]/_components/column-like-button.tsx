@@ -1,20 +1,20 @@
 "use client";
 
-import { useState, useTransition } from 'react';
-import { Heart } from 'lucide-react';
-import { postLike } from '../_action/like';
+import { useState, useTransition } from "react";
+import { ThumbsUp } from "lucide-react";
+import { likeColumn } from "../_action";
 
-export default function LikeButton({
-  isLiked,
-  articleId,
+export default function ColumnLikeButton({
+  columnId,
   initialLikes,
+  initialLiked,
 }: {
-  isLiked: boolean;
-  articleId: string;
+  columnId: string;
   initialLikes: number;
+  initialLiked: boolean;
 }) {
-  const [liked, setLiked] = useState(isLiked);
   const [likes, setLikes] = useState(initialLikes);
+  const [liked, setLiked] = useState(initialLiked);
   const [pending, startTransition] = useTransition();
 
   function handleClick() {
@@ -26,7 +26,7 @@ export default function LikeButton({
       setLiked((current) => !current);
       setLikes((current) => current + (previousLiked ? -1 : 1));
 
-      const result = await postLike(articleId);
+      const result = await likeColumn(columnId);
 
       if (!result.success) {
         setLiked(previousLiked);
@@ -43,17 +43,16 @@ export default function LikeButton({
     <div className="mb-10 flex flex-col items-center gap-2">
       <button
         type="button"
-        onClick={handleClick}
         disabled={pending}
+        onClick={handleClick}
         aria-pressed={liked}
-        className={`flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl shadow-md transition-all duration-300 hover:shadow-lg
-          ${liked ? 'scale-110 text-red-500 shadow-red-100' : 'text-gray-300'}
-          ${pending ? 'cursor-not-allowed opacity-70' : ''}
+        className={`flex h-16 w-16 items-center justify-center rounded-full bg-white text-2xl shadow-md transition-all duration-300 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70
+          ${liked ? "scale-110 text-[#1677ff] shadow-[0_8px_24px_rgba(22,119,255,0.18)]" : "text-gray-300"}
         `}
       >
-        <Heart className={`${liked ? 'text-red-500' : 'text-gray-300'}`} />
+        <ThumbsUp className={`${liked ? "text-[#1677ff]" : "text-gray-300"}`} />
       </button>
-      <span className="text-sm text-gray-500">{likes} 点赞</span>
+      <span className="text-sm text-[#5b8def]">{likes} 点赞</span>
     </div>
   );
 }

@@ -1,26 +1,59 @@
-import { getCloudflareContext } from '@opennextjs/cloudflare'
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { authenticateAction } from '@/lib/authenticate-action';
+import {
+  articleByColumnKey,
+  articleByUserKey,
+  articleKey,
+  articleStatsKey,
+  columnByUserKey,
+  columnKey,
+  columnStatsKey,
+  commentCountKey,
+  commentKey,
+} from '@/lib/keys';
 
 const getKV = () => getCloudflareContext().env.MY_NEXT_KV;
 
-// 删除专栏（由 authenticateAction 包装）
-async function fn(user_id: string, id: string) {
+async function deleteArticleRecord(article: Article) {
   const kv = getKV();
+  const comments = await kv.list({ prefix: commentKey.getPrefix(article.id) });
 
-  // 我们之前设计的 key 格式是： `column:${col_id}:${timestampSort}`;
-  const prefix = `column:${id}:`;
-
-  const result = await kv.list({ prefix, limit: 1 });
-
-  if (result.keys.length === 0) {
-    throw new Error('专栏不存在');
-  }
-
-  const key = result.keys[0].name;
-
-  await kv.delete(key);
-
-  return { message: '专栏删除成功' };
+  await Promise.all([
+    kv.delete(articleKey.getKey(article.id)),
+    kv.delete(articleByColumnKey.getKey(article.column_id, article.id)),
+    kv.delete(articleByUserKey.getKey(article.user_id, article.id)),
+    kv.delete(articleStatsKey.getKey(article.id)),
+    kv.delete(commentCountKey.getKey(article.id)),
+    ...comments.keys.map((key) => kv.delete(key.name)),
+  ]);
 }
 
-export const deleteColumn = await authenticateAction(fn);
+async function fn(userId: string, columnId: string) {
+  const kv = getKV();
+  const key = columnKey.getKey(columnId);
+  const column = await kv.get<Column>(key, 'json');
+
+  if (!column) {
+    throw new Error('Column not found');
+  }
+
+  if (column.user_id !== userId) {
+    throw new Error('Forbidden');
+  }
+
+  const articles = await kv.list({ prefix: articleByColumnKey.getPrefix(columnId) });
+  const articleRecords = await Promise.all(
+    articles.keys.map((articleKeyItem) => kv.get<Article>(articleKeyItem.name, 'json'))
+  );
+
+  await Promise.all([
+    ...articleRecords.filter((article): article is Article => Boolean(article)).map(deleteArticleRecord),
+    kv.delete(key),
+    kv.delete(columnByUserKey.getKey(column.user_id, columnId)),
+    kv.delete(columnStatsKey.getKey(columnId)),
+  ]);
+
+  return column;
+}
+
+export const removeColumn = await authenticateAction(fn);

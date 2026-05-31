@@ -222,7 +222,9 @@ export function SimpleEditor({value, onChange, ref}: SimpleEditorProps) {
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
-      Image,
+      Image.configure({
+        allowBase64: true,
+      }),
       Typography,
       Superscript,
       Subscript,

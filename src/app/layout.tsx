@@ -1,30 +1,33 @@
-import { ThemeProvider } from "./_components/theme-provider";
-import "./globals.css";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-export { ThemeProvider };
+import "./globals.css";
+import { ThemeProvider } from "@/app/_components/theme-provider";
+import Navbar from "@/app/_components/nav-bar";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-export default function RootLayout({
+export const metadata: Metadata = {
+  title: "精选专栏 - Next.js 版",
+  description: "深入浅出，探索技术的无限可能",
+};
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const navbar = await Navbar();
+
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} font-sans antialiased bg-gray-50 text-slate-800 transition-colors duration-300`}
-      >
+      <body className={`${inter.variable} font-sans antialiased bg-[#f7fbff] text-slate-800 transition-colors duration-300`}>
         <ThemeProvider
-          // 告诉 next-themes 通过修改 <html> 元素的 class 来切换主题。配合 Tailwind CSS 的 dark: 前缀使用非常方便。
           attribute="class"
-          // 默认跟随系统主题。用户第一次访问的时候会自动检测操作系统的主题偏好。
           defaultTheme="system"
-          // 启用系统主题检测。用户第一次访问的时候会自动检测操作系统的主题偏好。
           enableSystem
-          // 禁用主题切换时的过渡效果。默认是启用的。
           disableTransitionOnChange
         >
+          {navbar}
           {children}
         </ThemeProvider>
       </body>
