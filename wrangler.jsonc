@@ -33,6 +33,6 @@
 	"vars": {
 		"GITHUB_CLIENT_ID": "Ov23limXrMpCfQu3UbQv",
 		"GITHUB_CLIENT_SECRET": "1abd74e2ba0819292a7976d906c87e085a4561b8",
-		"NEXT_PUBLIC_BASE_URL": "http://localhost:3000"
+		"NEXT_PUBLIC_BASE_URL": "https://my-app.1461089222.workers.dev"
 	}
 }
